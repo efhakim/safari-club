@@ -1,39 +1,43 @@
-import { useContext } from 'react';
+import './checkout.styles.scss'
 
+import CheckOutItem from '../../components/checkout-item/checkout-item.component';
+
+import { useContext } from 'react';
 import { CartContext } from '../../contexts/cart.context';
 
-import CheckoutItem from '../../components/checkout-item/checkout-item.component';
+const CheckOut = () => {
+    const { cartItems, cartTotal } = useContext(CartContext)
 
-import './checkout.styles.scss';
+    return (
+        <div className="checkout-container">
+            <div className="checkout-header">
+                <span className="header-block">
+                    Product
+                </span>
+                <span className="header-block">
+                    Description
+                </span>
+                <span className="header-block">
+                    Quantity
+                </span>
+                <span className="header-block">
+                    Price
+                </span>
+                <span className="header-block">
+                    Remove
+                </span>
+            </div>
 
-const Checkout = () => {
-  const { cartItems, cartTotal } = useContext(CartContext);
+            {
+            cartItems.map(item => {return <CheckOutItem key={item.id} item={item}/>})
+            }
 
-  return (
-    <div className='checkout-container'>
-      <div className='checkout-header'>
-        <div className='header-block'>
-          <span>Product</span>
-        </div>
-        <div className='header-block'>
-          <span>Description</span>
-        </div>
-        <div className='header-block'>
-          <span>Quantity</span>
-        </div>
-        <div className='header-block'>
-          <span>Price</span>
-        </div>
-        <div className='header-block'>
-          <span>Remove</span>
-        </div>
-      </div>
-      {cartItems.map((cartItem) => (
-        <CheckoutItem key={cartItem.id} cartItem={cartItem} />
-      ))}
-      <span className='total'>Total: ${cartTotal}</span>
-    </div>
-  );
-};
+            <span className="total">
+            Total: ${cartTotal}
+            </span>
 
-export default Checkout;
+        </div>
+    )
+}
+
+export default CheckOut;
